@@ -26,7 +26,9 @@ char *Paste() {
 import "C"
 
 func Copy(p string) {
-	C.Copy(C.CString(p))
+	s := C.CString(p)
+	defer C.free(unsafe.Pointer(s))
+	C.Copy(s)
 }
 
 func Paste() string {
